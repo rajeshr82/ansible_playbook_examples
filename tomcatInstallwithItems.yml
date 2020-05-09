@@ -1,0 +1,34 @@
+---
+- name: configure Tomcat8, tomcat8-admin, change portnumber 8080 to 9090 , check url
+  hosts: all
+  tasks:
+   - name: Install tomcat8
+     apt:
+      name: tomcat8
+      state: present
+      update_cache: yes
+   - name: Instal tomcat8-admin
+     apt:
+      name: tomcat8-admin
+      state: present
+      update_cache: yes
+   - name: Copy tomcat users
+     copy:
+      src: /home/ubuntu/tomcat-users.xml
+      dest: /etc/tomcat8
+   - name: Change port umber from 8080 to 9090
+     replace:
+      regexp: 8080
+      replace: 9090
+      path: /etc/tomcat8/server.xml
+   - name: Restart tomcat8 service
+     service:
+      name: tomcat8
+      state: restarted
+   - name: check the repose of tomcat server
+     uri:
+      url: "{{item}}"
+      with_items:
+       - http://172.31.19.165:9090
+       - http://172.31.31.218:9090 
+...

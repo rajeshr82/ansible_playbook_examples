@@ -1,0 +1,9 @@
+---
+- name: Check url response of all managed nodes
+  uri:
+   url: "{{item}}"
+  with_items:
+    - http://172.31.24.168
+    - http://vpc-20263a47
+    - http://172.31.23.82
+...

@@ -1,0 +1,14 @@
+---
+- name: check if a directory is present if not then create a file.
+  hosts: all
+  tasks:
+   - name: check for the directory
+     stat:
+      path: /home/ubuntu/f1
+     register: a
+   - name: Display output foder name
+     file:
+      name: /home/ubuntu/f1
+      state: touch
+     when: a.stat.exists == false
+...

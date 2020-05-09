@@ -1,0 +1,17 @@
+---
+- name: configure Tomcat8, tomcat8-admin, change portnumber 8080 to 9090 , check url
+  hosts: all
+  tasks:
+   - name: Stop tomcat8
+     service:
+      name: tomcat8
+      state: stopped
+   - name: Install tomcat8
+     apt:
+      name: tomcat8
+      state: absent
+   - name: Instal tomcat8-admin
+     apt:
+      name: tomcat8-admin
+      state: absent
+...

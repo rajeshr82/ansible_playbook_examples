@@ -1,0 +1,12 @@
+---
+- name: Copy tomcat-users.xml 
+  copy:
+   src: "{{copyfilename}}"
+   dest: "{{destinationfile}}"
+- name: change port of tomcat 8080 to 9090
+  replace:
+   regexp: "{{currentport}}"
+   replace: "{{replacePort}}"
+   path: "{{replacefilepath}}"
+  notify: check url response
+...

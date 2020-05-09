@@ -1,0 +1,11 @@
+---
+- name: Create a user
+  hosts: servers
+  tasks:
+   - name: create User
+     user:
+      name: "{{a}}"
+      password: "{{b}}"
+      home: "{{c}}"
+      uid: "{{d}}"
+...

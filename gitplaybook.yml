@@ -1,0 +1,12 @@
+---
+- name: Install Git and clone git repo
+  hosts: all
+  tasks:
+   - name: Install git
+     apt:
+      name: git
+      state: present
+   - name: Download repository 
+     git:
+      repo: https://github.com/rajeshr82/sprintboot-demo.git
+      dest: /home/ubuntu/mygit

@@ -1,0 +1,13 @@
+---
+- name: Install s/w applicaiton
+  hosts: all
+  tasks:
+   - name: Install s/w
+     apt:
+      name: "{{item.a}}"
+      state: "{{item.b}}"
+      update_cache: "{{item.c}}"
+     with_items:
+      - {a: openjdk-8-jdk, b: present, c: yes}   
+      - {a: git, b: latest, c: no}
+...

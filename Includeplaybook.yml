@@ -1,0 +1,7 @@
+---
+- name: create a directory using child playbook
+  hosts: all
+  tasks:
+   - name: call child playbook
+     include: childplaybook.yml
+...

@@ -1,0 +1,56 @@
+---
+- name: Install s/w required for CI
+  hosts: servers
+  tasks:
+   - name: Install softwares
+     apt:
+      name: "{{item}}"
+      state: present
+     with_items:
+      - openjdk-8-jdk
+      - git
+      - maven
+- name: Download servers in qa and prod
+  hosts: qaserver, prodserver
+  tasks:
+   - name: Install tomcat8 and tomcat8-admin
+     apt:
+      name: "{{item}}"
+      state: present
+     with_items:
+      - tomcat8
+      - tomcat8-admin
+- name: Download code in Dev environment and create artifact  (Dev Server)
+  hosts: devserver
+  tasks:
+   - name: Continuous Download
+     git:
+      repo: https://github.com/rajeshr82/sprintboot-demo.git
+      dest: /home/ubuntu/project-code
+   - name: Continuous Build
+     shell: cd /home/ubuntu/project-code;mvn package
+   - name: Copy artifact from dev to controller
+     fetch:
+      src: /home/ubuntu/project-code/target/sprintboot-demo.war
+      dest: /tmp
+- name: Deploy the code to QA server and run the test programs
+  hosts: qaserver
+  tasks:
+   - name: copy artifact into tomcat on qa server
+     copy:
+      src: /tmp/172.31.25.53/home/ubuntu/project-code/target/sprintboot-demo.war
+      dest: /var/lib/tomcat8/webapps/testweb.war
+   - name: Download selenium programs
+     git:
+      repo: https://github.com/rajeshr82/FunctionalTesting.git
+      dest: /home/ubuntu/test-code
+   - name: Execute the selenium
+     shell: java -jar /home/ubuntu/test-code/testing.jar
+- name: Deploy the artifact into Prod server
+  hosts: prodserver
+  tasks:
+   - name: Continuous Delivery
+     copy: 
+      src: /tmp/172.31.25.53/home/ubuntu/project-code/target/sprintboot-demo.war
+      dest: /var/lib/tomcat8/webapps/prodweb.war
+... 

@@ -1,0 +1,23 @@
+---
+- name: Install apache2, change html content and restart
+  hosts: all
+  tasks:
+   - name: Install apache2
+     apt:
+      name: apache2
+      state: present
+   - name: Edit indext.html and add content of html
+     copy:
+      content: "Welcome Raj\n"
+      dest: /var/www/html/index.html
+   - name: Restart apache2
+     service:
+      name: apache2
+      state: restarted
+   - name: check url response of server1
+     uri:
+      url: http://172.31.30.103
+   - name: check url of server2
+     uri:
+      url: http://172.31.31.218
+...    

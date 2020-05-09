@@ -1,0 +1,14 @@
+---
+- name: create a User and display the output
+  hosts: all
+  tasks:
+   - name: create User
+     user:
+      name: Hemalatha
+      password: Hema@123
+      home: /home/ubuntu/Hemalatha
+      uid: 8999
+     register: a
+   - name: Display output of above module
+     debug:
+      var: a

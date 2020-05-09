@@ -1,0 +1,13 @@
+---
+- name: Implementing conditional statement (when)
+  hosts: all
+  vars:
+    - a: 10
+  tasks:
+   - name: Install Tree based on condition
+     apt:
+      name: tree
+      state: presetn
+     when: a==100
+
+...

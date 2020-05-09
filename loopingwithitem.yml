@@ -1,0 +1,15 @@
+---
+- name: Install s/w applicaiton
+  hosts: all
+  tasks:
+   - name: Install s/w
+     apt:
+      name: "{{item}}"
+      state: present
+      update_cache: no
+     with_items:
+      - tree
+      - openjdk-8-jdk
+      - git
+      - firewalld
+...

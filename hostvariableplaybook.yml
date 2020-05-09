@@ -1,0 +1,10 @@
+---
+- name: Install tree using host playbook
+  hosts: 172.31.30.103
+  tasks:
+   - name: Install Tree
+     apt:
+      name: "{{a}}"
+      state: "{{b}}"
+      update_cache: "{{c}}"
+...

@@ -1,0 +1,25 @@
+---
+- name: Install tomcat8, tomcat8-admin, changeport, restart server and check url
+  hosts: all
+  tasks:
+  - name: Install tomcat8
+    apt:
+     name: tomcat8
+     state: present
+  - name: Install tomcat8-admin
+    apt:
+     name: tomcat8-admin
+     state: present
+  - name: change port number from 8080 to 9090
+    replace:
+     regexp: 8080
+     replace: 9090
+     path: /etc/tomcat8/server.xml
+  - name: Restart tomcat8 service
+    service:
+     name: tomcat8
+     state: restarted
+  - name: check the response of Server1
+    uri:
+     url: http://172.31.31.218:9090
+...
